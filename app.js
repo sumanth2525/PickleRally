@@ -951,6 +951,9 @@ async function runDiagnostics() {
     ok: typeof SUPABASE_URL !== "undefined" && SUPABASE_URL !== "YOUR_SUPABASE_URL",
   });
 
+  // Ensure data is loaded before checking (avoids false negative from timing)
+  await Promise.all([fetchEvents(), fetchPlayers()]);
+
   checks.push({
     name: "Events loaded",
     ok: Array.isArray(events) && events.length > 0,

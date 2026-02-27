@@ -242,42 +242,37 @@ CREATE POLICY "Users can insert friendships" ON public.friendships
 CREATE POLICY "Users can read own notifications" ON public.notifications FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can update own notifications" ON public.notifications FOR UPDATE USING (auth.uid() = user_id);
 
+-- Helper to check room membership (avoids infinite recursion in policies)
+CREATE OR REPLACE FUNCTION public.is_room_member(p_room_id UUID, p_user_id UUID)
+RETURNS BOOLEAN
+LANGUAGE sql
+SECURITY DEFINER
+STABLE
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.chat_room_members
+    WHERE room_id = p_room_id AND user_id = p_user_id
+  );
+$$;
+
 -- Chat rooms: members can view their rooms
 CREATE POLICY "members can view their rooms" ON public.chat_rooms
-FOR SELECT USING (
-  EXISTS (
-    SELECT 1 FROM public.chat_room_members m
-    WHERE m.room_id = chat_rooms.id AND m.user_id = auth.uid()
-  )
-);
-CREATE POLICY "Authenticated can create rooms" ON public.chat_rooms FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+FOR SELECT USING (public.is_room_member(chat_rooms.id, auth.uid()));
+CREATE POLICY "Authenticated can create rooms" ON public.chat_rooms FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
 -- Chat room members
 CREATE POLICY "members can view room members" ON public.chat_room_members
-FOR SELECT USING (
-  EXISTS (
-    SELECT 1 FROM public.chat_room_members m
-    WHERE m.room_id = chat_room_members.room_id AND m.user_id = auth.uid()
-  )
-);
+FOR SELECT USING (public.is_room_member(chat_room_members.room_id, auth.uid()));
 CREATE POLICY "Authenticated can join rooms" ON public.chat_room_members
-FOR INSERT WITH CHECK (auth.role() = 'authenticated' AND user_id = auth.uid());
+FOR INSERT WITH CHECK (auth.uid() IS NOT NULL AND user_id = auth.uid());
 
 -- Messages
 CREATE POLICY "members can read messages" ON public.messages
-FOR SELECT USING (
-  EXISTS (
-    SELECT 1 FROM public.chat_room_members m
-    WHERE m.room_id = messages.room_id AND m.user_id = auth.uid()
-  )
-);
+FOR SELECT USING (public.is_room_member(messages.room_id, auth.uid()));
 CREATE POLICY "members can send messages" ON public.messages
 FOR INSERT WITH CHECK (
-  EXISTS (
-    SELECT 1 FROM public.chat_room_members m
-    WHERE m.room_id = messages.room_id AND m.user_id = auth.uid()
-  )
-  AND sender_id = auth.uid()
+  public.is_room_member(messages.room_id, auth.uid()) AND sender_id = auth.uid()
 );
 
 -- ============================
