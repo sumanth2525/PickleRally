@@ -1,0 +1,118 @@
+SQL Server (SSMS) schema for PickleRally
+========================================
+
+-- 1. Create database (run once)
+CREATE DATABASE PickleRally;
+GO
+
+USE PickleRally;
+GO
+
+-- 2. Events table (what the app expects today)
+CREATE TABLE dbo.Events (
+    Id           UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID() PRIMARY KEY,
+    Title        NVARCHAR(200)    NOT NULL,
+    Type         NVARCHAR(50)     NOT NULL,        -- 'open', 'league', 'tournament'
+    [Date]       NVARCHAR(100)    NOT NULL,        -- matches app.js 'date' text
+    [Location]   NVARCHAR(200)    NOT NULL,
+    MaxPlayers   INT              NOT NULL DEFAULT 16,
+    Lat          FLOAT            NULL,
+    Lng          FLOAT            NULL,
+    CreatedAt    DATETIME2        NOT NULL DEFAULT SYSDATETIME()
+);
+
+-- 3. Players table (for Find Players screen)
+CREATE TABLE dbo.Players (
+    Id           UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID() PRIMARY KEY,
+    [Name]       NVARCHAR(150)    NOT NULL,
+    Skill        NVARCHAR(20)     NOT NULL,        -- e.g. '3.5'
+    [Location]   NVARCHAR(200)    NOT NULL,
+    Lat          FLOAT            NULL,
+    Lng          FLOAT            NULL,
+    CreatedAt    DATETIME2        NOT NULL DEFAULT SYSDATETIME()
+);
+
+-- 4. Chat tables (matching the chat model in the app)
+CREATE TABLE dbo.ChatRooms (
+    Id         UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID() PRIMARY KEY,
+    CreatedAt  DATETIME2        NOT NULL DEFAULT SYSDATETIME(),
+    IsGroup    BIT              NOT NULL DEFAULT 0,
+    Title      NVARCHAR(200)    NULL
+);
+
+CREATE TABLE dbo.ChatRoomMembers (
+    RoomId     UNIQUEIDENTIFIER NOT NULL,
+    UserId     UNIQUEIDENTIFIER NOT NULL,
+    JoinedAt   DATETIME2        NOT NULL DEFAULT SYSDATETIME(),
+    CONSTRAINT PK_ChatRoomMembers PRIMARY KEY (RoomId, UserId),
+    CONSTRAINT FK_ChatRoomMembers_Rooms
+        FOREIGN KEY (RoomId) REFERENCES dbo.ChatRooms(Id) ON DELETE CASCADE
+);
+
+CREATE TABLE dbo.Messages (
+    Id         UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID() PRIMARY KEY,
+    RoomId     UNIQUEIDENTIFIER NOT NULL,
+    SenderId   UNIQUEIDENTIFIER NOT NULL,
+    Content    NVARCHAR(MAX)    NOT NULL,
+    CreatedAt  DATETIME2        NOT NULL DEFAULT SYSDATETIME(),
+    CONSTRAINT FK_Messages_Rooms
+        FOREIGN KEY (RoomId) REFERENCES dbo.ChatRooms(Id) ON DELETE CASCADE
+);
+
+CREATE INDEX IX_Messages_Room_Created
+ON dbo.Messages (RoomId, CreatedAt);
+
+
+Matching Supabase/Postgres schema (for later)
+=============================================
+
+-- Events
+CREATE TABLE IF NOT EXISTS public.events (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title        text NOT NULL,
+  type         text NOT NULL CHECK (type IN ('open','league','tournament')),
+  date         text NOT NULL,
+  location     text NOT NULL,
+  max_players  integer NOT NULL DEFAULT 16,
+  lat          double precision,
+  lng          double precision,
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+
+-- Players
+CREATE TABLE IF NOT EXISTS public.players (
+  id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name         text NOT NULL,
+  skill        text NOT NULL,
+  location     text NOT NULL,
+  lat          double precision,
+  lng          double precision,
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+
+-- Chat
+CREATE TABLE IF NOT EXISTS public.chat_rooms (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at timestamptz NOT NULL DEFAULT now(),
+  is_group   boolean NOT NULL DEFAULT false,
+  title      text
+);
+
+CREATE TABLE IF NOT EXISTS public.chat_room_members (
+  room_id    uuid NOT NULL REFERENCES public.chat_rooms(id) ON DELETE CASCADE,
+  user_id    uuid NOT NULL,
+  joined_at  timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (room_id, user_id)
+);
+
+CREATE TABLE IF NOT EXISTS public.messages (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  room_id    uuid NOT NULL REFERENCES public.chat_rooms(id) ON DELETE CASCADE,
+  sender_id  uuid NOT NULL,
+  content    text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_messages_room_created
+  ON public.messages (room_id, created_at);
+

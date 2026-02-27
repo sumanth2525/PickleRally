@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PicklePro – Figma Design (Light)</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --green:#1A8A3C;
+  --green-light:#E8F7ED;
+  --green-mid:#2EAD56;
+  --lime:#7DC940;
+  --lime-bg:#F2FAE8;
+  --navy:#0B1120;
+  --text:#1A2235;
+  --sub:#6B7FA0;
+  --muted:#A0ADC0;
+  --card:#FFFFFF;
+  --card2:#F6F8FC;
+  --border:#E4E9F2;
+  --orange:#F06030;
+  --teal:#0D9E8A;
+  --page:#F0F3FA;
+}
+
+body{
+  background:var(--page);
+  font-family:'Outfit',sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* FIGMA CANVAS */
+.canvas{
+  min-height:100vh;
+  background-color:var(--page);
+  background-image:
+    linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.04) 1px, transparent 1px);
+  background-size:24px 24px;
+  padding:56px 32px 80px;
+}
+
+/* FIGMA TOP BAR */
+.figma-bar{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:44px;
+  background:#FFFFFF;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  z-index:100;
+  border-bottom:1px solid #E4E9F2;
+  box-shadow:0 1px 8px rgba(0,0,0,.06);
+}
+.figma-logo{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text);}
+.figma-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#F24E1E,#A259FF)}
+.figma-tabs{display:flex;gap:2px;}
+.figma-tab{font-size:12px;color:var(--muted);padding:4px 12px;border-radius:4px;cursor:pointer;font-weight:600;}
+.figma-tab.active{background:var(--green-light);color:var(--green);font-weight:700;}
+.figma-tools{display:flex;gap:8px;align-items:center;}
+.tool-btn{width:28px;height:28px;border-radius:6px;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--sub);}
+
+/* SECTION LABEL */
+.section-label{
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* SCREENS ROW */
+.screens-row{
+  display:flex;gap:32px;align-items:flex-start;
+  justify-content:center;flex-wrap:wrap;margin-top:60px;
+}
+.screen-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;animation:fadeUp .6s ease both;}
+.screen-wrap:nth-child(1){animation-delay:.1s}
+.screen-wrap:nth-child(2){animation-delay:.25s}
+.screen-wrap:nth-child(3){animation-delay:.4s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+.screen-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+/* PHONE FRAME */
+.phone{
+  width:280px;
+  border-radius:40px;
+  background:#FFFFFF;
+  box-shadow:
+    0 0 0 8px #E8ECF5,
+    0 0 0 10px #D8DEEE,
+    0 40px 80px rgba(30,50,100,.15),
+    inset 0 0 0 1px rgba(0,0,0,.04);
+  overflow:hidden;
+  position:relative;
+}
+
+/* NOTCH */
+.notch{
+  width:90px;height:22px;background:#E8ECF5;
+  border-radius:0 0 14px 14px;margin:0 auto;
+  display:flex;align-items:center;justify-content:center;gap:8px;position:relative;z-index:10;
+}
+.notch-cam{width:8px;height:8px;border-radius:50%;background:#C8CEDC;border:1.5px solid #B8C0D0;}
+.notch-pill{width:40px;height:5px;background:#C8CEDC;border-radius:4px;}
+
+/* STATUS BAR */
+.status{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 20px 0;font-size:10px;font-weight:700;color:var(--sub);
+}
+.s-icons{display:flex;gap:4px;align-items:center;}
+
+/* ===================== SCREEN 1: HOME ===================== */
+.s1-hero{
+  margin:12px 12px 0;border-radius:20px;overflow:hidden;
+  position:relative;height:160px;
+  background:linear-gradient(145deg,#1A8A3C 0%,#0D5C27 100%);
+}
+.s1-court-lines{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.1) 1.5px,transparent 1.5px),linear-gradient(90deg,rgba(255,255,255,.1) 1.5px,transparent 1.5px);
+  background-size:22px 22px;
+}
+.s1-glow{
+  position:absolute;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(255,255,255,.15) 0%,transparent 70%);
+  top:-60px;right:-30px;pointer-events:none;
+}
+.s1-tag{
+  display:inline-block;background:rgba(255,255,255,.2);color:#fff;
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:20px;border:1px solid rgba(255,255,255,.3);margin-bottom:6px;
+}
+.s1-hello{font-size:10px;color:rgba(255,255,255,.7);font-weight:500;}
+.s1-name{font-family:'Bebas Neue',sans-serif;font-size:30px;line-height:1;color:#fff;letter-spacing:.03em;}
+.s1-rating-row{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.s1-rating-badge{
+  background:#fff;color:var(--green);font-size:12px;font-weight:800;
+  width:40px;height:40px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+.s1-rating-badge span{font-size:7px;font-weight:700;opacity:.6;}
+.s1-stats-mini{display:flex;flex-direction:column;gap:2px;}
+.s1-stat-text{font-size:9px;color:rgba(255,255,255,.7);}
+.s1-stat-text b{color:#fff;font-weight:700;}
+
+/* QUICK STATS */
+.s1-stats{display:flex;gap:8px;margin:10px 12px 0;}
+.s1-stat{
+  flex:1;background:var(--card2);border-radius:14px;padding:10px 8px;
+  text-align:center;border:1px solid var(--border);
+}
+.s1-stat-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);line-height:1;}
+.s1-stat-label{font-size:8px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+
+/* NEARBY COURTS */
+.s1-section{margin:12px 12px 0;}
+.s1-section-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.s1-section-title{font-size:11px;font-weight:700;color:var(--text);}
+.s1-see-all{font-size:9px;color:var(--green);font-weight:600;}
+.s1-court-card{
+  background:var(--card2);border-radius:14px;padding:10px;
+  display:flex;gap:10px;align-items:center;margin-bottom:6px;border:1px solid var(--border);
+}
+.s1-court-img{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,#E8F7ED,#C8EDD5);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.s1-court-info{flex:1;}
+.s1-court-name{font-size:10px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.s1-court-meta{font-size:8px;color:var(--sub);}
+.s1-avail{
+  background:var(--green-light);color:var(--green);
+  font-size:8px;font-weight:700;padding:3px 7px;border-radius:8px;
+  border:1px solid rgba(26,138,60,.15);
+}
+.s1-avail.busy{background:#FFF0EA;color:var(--orange);border-color:rgba(240,96,48,.15);}
+
+/* UPCOMING MATCH */
+.s1-match{
+  margin:10px 12px 0;background:var(--card2);border-radius:16px;
+  padding:12px;border:1px solid var(--border);position:relative;overflow:hidden;
+}
+.s1-match::before{
+  content:'';position:absolute;right:-20px;top:-20px;
+  width:80px;height:80px;
+  background:radial-gradient(circle,rgba(13,158,138,.08) 0%,transparent 70%);
+}
+.s1-match-tag{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
+.s1-match-title{font-size:11px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.s1-match-row{display:flex;align-items:center;justify-content:space-between;}
+.s1-player{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--sub);font-weight:600;}
+.s1-avatar{
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;
+}
+.vs-dot{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--muted);}
+
+/* BOTTOM NAV */
+.bnav{
+  display:flex;justify-content:space-around;
+  padding:10px 0 14px;margin-top:10px;
+  border-top:1px solid var(--border);background:#fff;
+}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:7.5px;color:var(--muted);font-weight:600;}
+.bnav-item.active{color:var(--green);}
+.bnav-icon{font-size:15px;}
+.nav-dot{width:4px;height:4px;border-radius:50%;background:var(--green);margin:0 auto;}
+
+/* ===================== SCREEN 2: COURTS ===================== */
+.s2-header{
+  padding:14px 16px 10px;display:flex;align-items:center;justify-content:space-between;
+}
+.s2-back{
+  width:28px;height:28px;border-radius:8px;background:var(--card2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;border:1px solid var(--border);color:var(--sub);
+}
+.s2-title{font-size:14px;font-weight:700;color:var(--text);}
+.s2-filter-btn{background:var(--green);color:#fff;font-size:9px;font-weight:700;padding:5px 10px;border-radius:8px;}
+
+/* MAP AREA */
+.s2-map{
+  margin:0 12px;height:130px;border-radius:16px;overflow:hidden;
+  position:relative;background:linear-gradient(135deg,#E8F4F0,#D8EDE8);
+  border:1px solid var(--border);
+}
+.s2-map-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,100,50,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,100,50,.06) 1px,transparent 1px);
+  background-size:18px 18px;
+}
+.map-pin{
+  position:absolute;width:22px;height:22px;border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.map-pin.green-pin{background:var(--green);}
+.map-pin.orange-pin{background:var(--orange);}
+.map-pin.teal-pin{background:var(--teal);}
+.map-pin-inner{transform:rotate(45deg);font-size:9px;}
+.pin1{top:30px;left:60px;}
+.pin2{top:60px;right:50px;}
+.pin3{top:80px;left:110px;}
+.s2-map-label{
+  position:absolute;bottom:8px;left:8px;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(8px);
+  font-size:8px;font-weight:700;color:var(--sub);
+  padding:4px 8px;border-radius:6px;border:1px solid var(--border);
+}
+
+/* FILTER CHIPS */
+.s2-chips{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;}
+.s2-chip{
+  flex-shrink:0;padding:5px 12px;border-radius:20px;
+  font-size:9px;font-weight:700;border:1px solid var(--border);
+  background:var(--card);color:var(--sub);
+}
+.s2-chip.active{background:var(--green);color:#fff;border-color:var(--green);}
+
+/* COURT CARDS */
+.s2-courts{margin:0 12px;}
+.s2-ccard{
+  background:var(--card2);border-radius:14px;padding:10px;
+  margin-bottom:8px;border:1px solid var(--border);display:flex;gap:10px;
+}
+.s2-img{
+  width:60px;height:60px;border-radius:10px;
+  background:linear-gradient(135deg,#E8F7ED,#C8EDD5);
+  display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;
+}
+.s2-info{flex:1;}
+.s2-cname{font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.s2-cmeta{font-size:9px;color:var(--sub);margin-bottom:5px;}
+.s2-crow{display:flex;align-items:center;justify-content:space-between;}
+.s2-rating-stars{color:var(--lime);font-size:9px;}
+.s2-book-btn{background:var(--green);color:#fff;font-size:8px;font-weight:800;padding:4px 10px;border-radius:8px;}
+.s2-open{color:var(--green);font-size:8px;font-weight:700;}
+.s2-closed{color:var(--orange);font-size:8px;font-weight:700;}
+
+/* ===================== SCREEN 3: PROFILE ===================== */
+.s3-hero{
+  position:relative;height:120px;
+  background:linear-gradient(145deg,#1A8A3C 0%,#0D5C27 100%);overflow:hidden;
+}
+.s3-hero-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:20px 20px;
+}
+.s3-glow{
+  position:absolute;width:180px;height:180px;
+  background:radial-gradient(circle,rgba(255,255,255,.15) 0%,transparent 70%);
+  top:-40px;right:-20px;
+}
+.s3-avatar-wrap{position:absolute;bottom:-30px;left:16px;}
+.s3-avatar{
+  width:64px;height:64px;border-radius:20px;
+  background:linear-gradient(135deg,#7DC940,#4A9E20);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;
+  border:3px solid #fff;box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.s3-edit{
+  position:absolute;right:16px;bottom:10px;
+  background:rgba(255,255,255,.25);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.4);
+  font-size:8px;font-weight:700;color:#fff;padding:5px 10px;border-radius:8px;
+}
+
+.s3-info-section{padding:42px 16px 0;}
+.s3-uname{font-size:16px;font-weight:800;color:var(--text);}
+.s3-handle{font-size:10px;color:var(--sub);margin-bottom:10px;}
+.s3-rating-big{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--card2);border-radius:14px;border:1px solid var(--border);margin-bottom:10px;
+}
+.s3-dupr{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--green);line-height:1;}
+.s3-dupr-label{font-size:8px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.s3-level{background:var(--green-light);color:var(--green);font-size:9px;font-weight:800;padding:3px 8px;border-radius:6px;}
+.s3-divider{width:1px;height:36px;background:var(--border);}
+.s3-sub-stat{text-align:center;flex:1;}
+.s3-sub-num{font-size:16px;font-weight:800;color:var(--text);}
+.s3-sub-label{font-size:8px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;}
+
+/* WIN RATE BAR */
+.s3-bar-label{display:flex;justify-content:space-between;font-size:9px;font-weight:700;margin-bottom:5px;}
+.s3-bar-label span:first-child{color:var(--sub);}
+.s3-bar-label span:last-child{color:var(--green);}
+.s3-bar-track{height:6px;background:var(--card2);border-radius:4px;overflow:hidden;border:1px solid var(--border);}
+.s3-bar-fill{height:100%;background:linear-gradient(90deg,#2EAD56,#7DC940);border-radius:4px;width:73%;}
+
+/* RECENT MATCHES */
+.s3-match-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);}
+.s3-result{width:24px;height:24px;border-radius:8px;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.win{background:var(--green-light);color:var(--green);}
+.loss{background:#FFF0EA;color:var(--orange);}
+.s3-match-name{font-size:9px;font-weight:600;color:var(--text);flex:1;}
+.s3-match-score{font-size:9px;font-weight:700;color:var(--sub);}
+
+/* ACHIEVEMENTS */
+.s3-achievements{display:flex;gap:8px;margin:0;}
+.s3-badge{
+  flex:1;background:var(--card2);border-radius:12px;padding:8px;
+  text-align:center;border:1px solid var(--border);
+}
+.s3-badge-icon{font-size:18px;margin-bottom:3px;}
+.s3-badge-name{font-size:7px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+
+/* DESIGN TOKENS */
+.legend{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  margin:36px auto 0;padding:20px;
+  background:#fff;border-radius:16px;
+  border:1px solid var(--border);
+  max-width:920px;
+  box-shadow:0 4px 20px rgba(30,50,100,.06);
+}
+.legend-title{width:100%;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:4px;}
+.token{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--sub);font-weight:500;}
+.token-dot{width:14px;height:14px;border-radius:4px;flex-shrink:0;border:1px solid rgba(0,0,0,.08);}
+</style>
+</head>
+<body>
+
+<!-- FIGMA TOP BAR -->
+<div class="figma-bar">
+  <div class="figma-logo">
+    <div class="figma-dot"></div>
+    PicklePro · Mobile App
+  </div>
+  <div class="figma-tabs">
+    <div class="figma-tab active">Design</div>
+    <div class="figma-tab">Prototype</div>
+    <div class="figma-tab">Inspect</div>
+  </div>
+  <div class="figma-tools">
+    <div class="tool-btn">⟲</div>
+    <div class="tool-btn">⟳</div>
+    <div class="tool-btn">▶</div>
+  </div>
+</div>
+
+<div class="canvas">
+  <div class="section-label">Mobile Screens — Light Theme v2.0 &nbsp;·&nbsp; 3 screens</div>
+
+  <div class="screens-row">
+
+    <!-- =========== SCREEN 1: HOME =========== -->
+    <div class="screen-wrap">
+      <div class="screen-title">🏠 Home</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-cam"></div><div class="notch-pill"></div></div>
+        <div class="status">
+          <span>9:41</span>
+          <div class="s-icons"><span>▲</span><span>WiFi</span><span>🔋</span></div>
+        </div>
+
+        <div class="s1-hero">
+          <div class="s1-court-lines"></div>
+          <div class="s1-glow"></div>
+          <div style="position:relative;z-index:2;padding:16px 16px 0;">
+            <div class="s1-tag">Pro Player</div>
+            <div class="s1-hello">Good morning,</div>
+            <div class="s1-name">ALEX CHEN</div>
+            <div class="s1-rating-row">
+              <div class="s1-rating-badge">4.2<span>DUPR</span></div>
+              <div class="s1-stats-mini">
+                <div class="s1-stat-text"><b>73%</b> Win Rate</div>
+                <div class="s1-stat-text">Rank <b>#14</b> Florida</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="s1-stats">
+          <div class="s1-stat"><div class="s1-stat-num">48</div><div class="s1-stat-label">Matches</div></div>
+          <div class="s1-stat"><div class="s1-stat-num">35</div><div class="s1-stat-label">Wins</div></div>
+          <div class="s1-stat"><div class="s1-stat-num">6</div><div class="s1-stat-label">Tourneys</div></div>
+        </div>
+
+        <div class="s1-section">
+          <div class="s1-section-hd">
+            <div class="s1-section-title">Nearby Courts</div>
+            <div class="s1-see-all">See all →</div>
+          </div>
+          <div class="s1-court-card">
+            <div class="s1-court-img">🏟</div>
+            <div class="s1-court-info">
+              <div class="s1-court-name">Boca Pickleball Center</div>
+              <div class="s1-court-meta">0.8 mi · 6 courts · ★ 4.8</div>
+            </div>
+            <div class="s1-avail">Open</div>
+          </div>
+          <div class="s1-court-card">
+            <div class="s1-court-img">🏕</div>
+            <div class="s1-court-info">
+              <div class="s1-court-name">Mizner Park Courts</div>
+              <div class="s1-court-meta">1.4 mi · 4 courts · ★ 4.5</div>
+            </div>
+            <div class="s1-avail busy">Busy</div>
+          </div>
+        </div>
+
+        <div class="s1-match">
+          <div class="s1-match-tag">⚡ Upcoming Match</div>
+          <div class="s1-match-title">Club Singles · Today 4:00 PM</div>
+          <div class="s1-match-row">
+            <div class="s1-player">
+              <div class="s1-avatar" style="background:linear-gradient(135deg,#7DC940,#4A9E20);color:#fff">A</div>
+              Alex C.
+            </div>
+            <div class="vs-dot">VS</div>
+            <div class="s1-player">
+              <div class="s1-avatar" style="background:linear-gradient(135deg,#0D9E8A,#0A6E60);color:#fff">J</div>
+              Jake M.
+            </div>
+          </div>
+        </div>
+
+        <div class="bnav">
+          <div class="bnav-item active"><span class="bnav-icon">⌂</span>Home<div class="nav-dot"></div></div>
+          <div class="bnav-item"><span class="bnav-icon">⊞</span>Courts</div>
+          <div class="bnav-item"><span class="bnav-icon">🏆</span>Events</div>
+          <div class="bnav-item"><span class="bnav-icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========== SCREEN 2: COURTS =========== -->
+    <div class="screen-wrap">
+      <div class="screen-title">🏟 Courts</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-cam"></div><div class="notch-pill"></div></div>
+        <div class="status">
+          <span>9:41</span>
+          <div class="s-icons"><span>▲</span><span>WiFi</span><span>🔋</span></div>
+        </div>
+
+        <div class="s2-header">
+          <div class="s2-back">←</div>
+          <div class="s2-title">Find Courts</div>
+          <div class="s2-filter-btn">Filter</div>
+        </div>
+
+        <div class="s2-map">
+          <div class="s2-map-grid"></div>
+          <div class="map-pin green-pin pin1"><div class="map-pin-inner">🏓</div></div>
+          <div class="map-pin orange-pin pin2"><div class="map-pin-inner">🏓</div></div>
+          <div class="map-pin teal-pin pin3"><div class="map-pin-inner">🏓</div></div>
+          <div class="s2-map-label">📍 Boca Raton, FL</div>
+        </div>
+
+        <div class="s2-chips">
+          <div class="s2-chip active">All Courts</div>
+          <div class="s2-chip">Outdoor</div>
+          <div class="s2-chip">Indoor</div>
+          <div class="s2-chip">Free</div>
+          <div class="s2-chip">Lit</div>
+        </div>
+
+        <div class="s2-courts">
+          <div class="s2-ccard">
+            <div class="s2-img">🏟</div>
+            <div class="s2-info">
+              <div class="s2-cname">Boca Pickleball Center</div>
+              <div class="s2-cmeta">📍 0.8 mi · Outdoor · 6 courts</div>
+              <div class="s2-crow">
+                <div>
+                  <div class="s2-rating-stars">★★★★★</div>
+                  <div class="s2-open">● Open until 9PM</div>
+                </div>
+                <div class="s2-book-btn">Book</div>
+              </div>
+            </div>
+          </div>
+          <div class="s2-ccard">
+            <div class="s2-img">🏕</div>
+            <div class="s2-info">
+              <div class="s2-cname">Mizner Park Courts</div>
+              <div class="s2-cmeta">📍 1.4 mi · Outdoor · 4 courts</div>
+              <div class="s2-crow">
+                <div>
+                  <div class="s2-rating-stars">★★★★☆</div>
+                  <div class="s2-open">● Open until 10PM</div>
+                </div>
+                <div class="s2-book-btn">Book</div>
+              </div>
+            </div>
+          </div>
+          <div class="s2-ccard">
+            <div class="s2-img">🏢</div>
+            <div class="s2-info">
+              <div class="s2-cname">Delray Indoor Complex</div>
+              <div class="s2-cmeta">📍 3.1 mi · Indoor · 8 courts</div>
+              <div class="s2-crow">
+                <div>
+                  <div class="s2-rating-stars">★★★★★</div>
+                  <div class="s2-closed">● Closes at 6PM</div>
+                </div>
+                <div class="s2-book-btn">Book</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bnav">
+          <div class="bnav-item"><span class="bnav-icon">⌂</span>Home</div>
+          <div class="bnav-item active"><span class="bnav-icon">⊞</span>Courts</div>
+          <div class="bnav-item"><span class="bnav-icon">🏆</span>Events</div>
+          <div class="bnav-item"><span class="bnav-icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========== SCREEN 3: PROFILE =========== -->
+    <div class="screen-wrap">
+      <div class="screen-title">👤 Profile</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-cam"></div><div class="notch-pill"></div></div>
+        <div class="status">
+          <span>9:41</span>
+          <div class="s-icons"><span>▲</span><span>WiFi</span><span>🔋</span></div>
+        </div>
+
+        <div class="s3-hero">
+          <div class="s3-hero-bg"></div>
+          <div class="s3-glow"></div>
+          <div class="s3-avatar-wrap"><div class="s3-avatar">AC</div></div>
+          <div class="s3-edit">✏ Edit</div>
+        </div>
+
+        <div class="s3-info-section">
+          <div class="s3-uname">Alex Chen</div>
+          <div class="s3-handle">@alexchen · 🏳 Florida, USA</div>
+
+          <div class="s3-rating-big">
+            <div>
+              <div class="s3-dupr">4.2</div>
+              <div class="s3-dupr-label">DUPR Rating</div>
+            </div>
+            <div class="s3-level">Advanced</div>
+            <div style="flex:1"></div>
+            <div class="s3-divider"></div>
+            <div class="s3-sub-stat"><div class="s3-sub-num">48</div><div class="s3-sub-label">Played</div></div>
+            <div class="s3-divider"></div>
+            <div class="s3-sub-stat"><div class="s3-sub-num">35</div><div class="s3-sub-label">Wins</div></div>
+          </div>
+
+          <div style="margin-bottom:10px;">
+            <div class="s3-bar-label"><span>Win Rate</span><span>73%</span></div>
+            <div class="s3-bar-track"><div class="s3-bar-fill"></div></div>
+          </div>
+
+          <div style="margin:0 0 6px;font-size:10px;font-weight:700;color:var(--sub);">Recent Matches</div>
+          <div>
+            <div class="s3-match-item">
+              <div class="s3-result win">W</div>
+              <div class="s3-match-name">vs Jake Martinez</div>
+              <div class="s3-match-score">11–7, 11–4</div>
+            </div>
+            <div class="s3-match-item">
+              <div class="s3-result loss">L</div>
+              <div class="s3-match-name">vs Sam Rivera</div>
+              <div class="s3-match-score">8–11, 11–9, 4–11</div>
+            </div>
+            <div class="s3-match-item">
+              <div class="s3-result win">W</div>
+              <div class="s3-match-name">vs Chris Park</div>
+              <div class="s3-match-score">11–5, 11–3</div>
+            </div>
+          </div>
+
+          <div style="margin:10px 0 6px;font-size:10px;font-weight:700;color:var(--sub);">Achievements</div>
+          <div class="s3-achievements">
+            <div class="s3-badge"><div class="s3-badge-icon">🔥</div><div class="s3-badge-name">Hot Streak</div></div>
+            <div class="s3-badge"><div class="s3-badge-icon">🏆</div><div class="s3-badge-name">Tourney Win</div></div>
+            <div class="s3-badge"><div class="s3-badge-icon">⚡</div><div class="s3-badge-name">Speed Smash</div></div>
+          </div>
+        </div>
+
+        <div class="bnav">
+          <div class="bnav-item"><span class="bnav-icon">⌂</span>Home</div>
+          <div class="bnav-item"><span class="bnav-icon">⊞</span>Courts</div>
+          <div class="bnav-item"><span class="bnav-icon">🏆</span>Events</div>
+          <div class="bnav-item active"><span class="bnav-icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DESIGN TOKENS -->
+  <div class="legend">
+    <div class="legend-title">Design Tokens — Light Theme</div>
+    <div class="token"><div class="token-dot" style="background:#1A8A3C"></div>Primary Green</div>
+    <div class="token"><div class="token-dot" style="background:#E8F7ED"></div>Green Light BG</div>
+    <div class="token"><div class="token-dot" style="background:#FFFFFF"></div>Card White</div>
+    <div class="token"><div class="token-dot" style="background:#F0F3FA"></div>Page BG</div>
+    <div class="token"><div class="token-dot" style="background:#F06030"></div>Accent Orange</div>
+    <div class="token"><div class="token-dot" style="background:#0D9E8A"></div>Accent Teal</div>
+    <div class="token" style="width:100%;justify-content:center;margin-top:4px;font-size:9px;color:var(--muted)">Bebas Neue (Display) · Outfit (Body) · 8px grid</div>
+  </div>
+
+</div>
+</body>
+</html>
